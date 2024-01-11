@@ -1,5 +1,5 @@
 ((Configure Sonarqube as service))
-sudo vi /etc/systemd/system/sonar.service
+sudo vi /etc/systemd/system/sonarqube.service
 
 ((Add the following content to sonar.service))
 [Unit]
@@ -12,12 +12,26 @@ Type=forking
 ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
 ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
 
-User=sonarq
-Group=sonarq
+User=sonaradmin
+Group=sonaradmin
 Restart=always
+
+LimitNOFILE=65536
+LimitNPROC=8192
 
 [Install]
 WantedBy=multi-user.target
+
+
+
+AFTER FILE SAVE 
+RUN this command
+
+ >>>>  chmod +x /etc/systemd/system/sonarqube.service  <<<<<
+
+NOW root is also start sonarqube.service because i give execute permission
+
+IN ROOT and sonaradmin user both we have START,STOP,STATUS,RESTART sonarqube.service
 
 ((Now enable and start sonarqube))
 systemctl enable sonar
