@@ -67,9 +67,9 @@ NOW USING SONAR-SCANNER WE SCAN OR TEST SOURCE CODE
    Using Command prompt:
 Traverse to your project directory for which you want to run scan. In root of the directory run the below command and replace the detail which you have setup and got from the SonarQube project setup. Here replace the projectKey and sonar.login value with your detail
 
->>>> cd /opt/sonar-scanner/bin/ <<<<
+>>>> cd /root/live01/src/main/webapp/ <<<<
 
-we have sonar-scanner command in /opt/sonar-scanner/bin/ so we test or scan in sonar-scanner
+we have sonar-scanner so, run sonar-scanner command where we have source code 
  
  
 NOW RUN THIS BELOW COMMAND 
