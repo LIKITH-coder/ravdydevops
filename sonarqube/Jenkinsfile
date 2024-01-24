@@ -1,29 +1,28 @@
-pipeline{
+pipeline {
     agent any
     environment {
-        PATH = "$PATH:/opt/apache-maven-3.8.2/bin"
+        SCANNER_HOME = tool 'sonarqube-scanner'
     }
     stages{
-       stage('GetCode'){
+        stage (git){
             steps{
-                git 'https://github.com/ravdy/javaloginapp.git'
+                git branch: 'main', url: 'https://github.com/LIKITH-coder/live01'
             }
-         }        
-       stage('Build'){
+        }
+        stage(maven){
             steps{
                 sh 'mvn clean package'
             }
-         }
-        stage('SonarQube analysis') {
-//    def scannerHome = tool 'SonarScanner 4.0';
-        steps{
-        withSonarQubeEnv('sonarqube-8.9') { 
-        // If you have configured more than one global server connection, you can specify its name
-//      sh "${scannerHome}/bin/sonar-scanner"
-        sh "mvn sonar:sonar"
-    }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('sonarqube') {
+                        // Run the SonarQube Scanner
+                        sh "${env.SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=pipeline -Dsonar.projectName=pipeline -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/webapp/."
+                    }
+                }
+            }
         }
-       
     }
 }
